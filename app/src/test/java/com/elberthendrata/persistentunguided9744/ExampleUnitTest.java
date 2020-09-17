@@ -1,4 +1,4 @@
-package com.elberthendrata.persistentguided9744;
+package com.elberthendrata.persistentunguided9744;
 
 import org.junit.Test;
 

@@ -1,27 +1,31 @@
-package com.elberthendrata.persistentguided9744;
+package com.elberthendrata.persistentunguided9744;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
-import com.elberthendrata.persistentguided9744.adapter.UserRecyclerViewAdapter;
-import com.elberthendrata.persistentguided9744.database.DatabaseClient;
-import com.elberthendrata.persistentguided9744.model.User;
+import com.elberthendrata.persistentunguided9744.adapter.UserRecyclerViewAdapter;
+import com.elberthendrata.persistentunguided9744.database.DatabaseClient;
+import com.elberthendrata.persistentunguided9744.model.User;
 
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private TextInputEditText editText;
-    private Button addBtn;
+    private FloatingActionButton addBtn;
     private RecyclerView recyclerView;
     private SwipeRefreshLayout refreshLayout;
 
@@ -30,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         editText = findViewById(R.id.input_name);
-        addBtn = findViewById(R.id.btn_add);
+        addBtn = findViewById(R.id.add_member);
         refreshLayout = findViewById(R.id.swipe_refresh);
         recyclerView = findViewById(R.id.user_rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -38,7 +42,11 @@ public class MainActivity extends AppCompatActivity {
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addUser();
+                Fragment AddFragment = new AddFragment();
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.frame_layout, AddFragment)
+                        .commit();
             }
         });
 
@@ -69,11 +77,28 @@ public class MainActivity extends AppCompatActivity {
             @Override
             protected void onPostExecute(List<User> users) {
                 super.onPostExecute(users);
-                UserRecyclerViewAdapter adapter = new UserRecyclerViewAdapter(MainActivity.this, users);
+                final UserRecyclerViewAdapter adapter = new UserRecyclerViewAdapter(MainActivity.this, users);
                 recyclerView.setAdapter(adapter);
                 if (users.isEmpty()){
                     Toast.makeText(getApplicationContext(), "Empty List", Toast.LENGTH_SHORT).show();
                 }
+
+                SearchView searchView = findViewById(R.id.search);
+                searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String s) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onQueryTextChange(String s) {
+                        adapter.getFilter().filter(s);
+                        return false;
+                    }
+                });
+
+
             }
         }
 
@@ -81,33 +106,5 @@ public class MainActivity extends AppCompatActivity {
         get.execute();
     }
 
-    private void addUser(){
-        final String name = editText.getText().toString();
-
-        class AddUser extends AsyncTask<Void, Void, Void>{
-
-            @Override
-            protected Void doInBackground(Void... voids) {
-                User user = new User();
-                user.setFullName(name);
-
-                DatabaseClient.getInstance(getApplicationContext()).getDatabase()
-                        .userDao()
-                        .insert(user);
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
-                Toast.makeText(getApplicationContext(), "User saved", Toast.LENGTH_SHORT).show();
-                editText.setText("");
-                getUsers();
-            }
-        }
-
-        AddUser add = new AddUser();
-        add.execute();
-    }
 }
 

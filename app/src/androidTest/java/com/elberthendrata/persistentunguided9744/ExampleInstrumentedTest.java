@@ -1,4 +1,4 @@
-package com.elberthendrata.persistentguided9744;
+package com.elberthendrata.persistentunguided9744;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.elberthendrata.persistentguided9744", appContext.getPackageName());
+        assertEquals("com.elberthendrata.persistentunguided9744", appContext.getPackageName());
     }
 }

@@ -1,4 +1,4 @@
-package com.elberthendrata.persistentguided9744.database;
+package com.elberthendrata.persistentunguided9744.database;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -6,7 +6,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.elberthendrata.persistentguided9744.model.User;
+import com.elberthendrata.persistentunguided9744.model.User;
 
 import java.util.List;
 

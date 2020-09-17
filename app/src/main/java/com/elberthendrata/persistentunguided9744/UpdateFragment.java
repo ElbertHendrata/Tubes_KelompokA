@@ -1,5 +1,7 @@
-package com.elberthendrata.persistentguided9744;
+package com.elberthendrata.persistentunguided9744;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,13 +16,15 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.textfield.TextInputEditText;
-import com.elberthendrata.persistentguided9744.database.DatabaseClient;
-import com.elberthendrata.persistentguided9744.model.User;
+import com.elberthendrata.persistentunguided9744.database.DatabaseClient;
+import com.elberthendrata.persistentunguided9744.model.User;
+import com.google.android.material.textfield.TextInputLayout;
 
 
 public class UpdateFragment extends Fragment {
 
-    TextInputEditText editText;
+    TextInputEditText nameText, numberText, ageText;
+    TextInputLayout layoutName, layoutAge, layoutNum;
     Button saveBtn, deleteBtn, cancelBtn;
     User user;
 
@@ -32,17 +36,19 @@ public class UpdateFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_update, container, false);
         user = (User) getArguments().getSerializable("user");
-        editText = view.findViewById(R.id.input_name);
+        nameText = view.findViewById(R.id.input_name);
+        numberText = view.findViewById(R.id.input_number);
+        ageText = view.findViewById(R.id.input_age);
         saveBtn = view.findViewById(R.id.btn_update);
         deleteBtn = view.findViewById(R.id.btn_delete);
         cancelBtn = view.findViewById(R.id.btn_cancel);
-
+        layoutName = view.findViewById(R.id.input_name_layout);
+        layoutAge = view.findViewById(R.id.input_age_layout);
+        layoutNum = view.findViewById(R.id.input_number_layout);
         try {
-            if (user.getFullName() != null) {
-                editText.setText(user.getFullName());
-            } else {
-                editText.setText("-");
-            }
+                nameText.setText(user.getFullName());
+                ageText.setText(user.getAge().toString());
+                numberText.setText(user.getNumber());
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -56,15 +62,42 @@ public class UpdateFragment extends Fragment {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                user.setFullName(editText.getText().toString());
-                update(user);
+
+                if(nameText.getText().toString().isEmpty() || numberText.getText().toString().isEmpty() || ageText.getText().toString().isEmpty()){
+                    layoutNum.setError("Please fill number correctly.");
+                    layoutName.setError("Please fill name correctly.");
+                    layoutAge.setError("Please fill age correctly.");
+                }
+                else
+                {
+                    user.setFullName(nameText.getText().toString());
+                    user.setNumber(numberText.getText().toString());
+                    user.setAge(Integer.valueOf(ageText.getText().toString()));
+                    update(user);
+                }
+
             }
         });
 
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                delete(user);
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("Are you sure to delete?");
+
+                        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                                    delete(user);
+                            }
+                        }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        })
+                                .show();
+
             }
         });
 
@@ -92,7 +125,7 @@ public class UpdateFragment extends Fragment {
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
-                Toast.makeText(getActivity().getApplicationContext(), "User updated", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getApplicationContext(), "Employee updated", Toast.LENGTH_SHORT).show();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.hide(UpdateFragment.this).commit();
             }
@@ -117,7 +150,7 @@ public class UpdateFragment extends Fragment {
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
-                Toast.makeText(getActivity().getApplicationContext(), "User deleted", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getApplicationContext(), "Employee deleted", Toast.LENGTH_SHORT).show();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.hide(UpdateFragment.this).commit();
             }

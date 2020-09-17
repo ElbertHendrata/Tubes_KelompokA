@@ -1,4 +1,4 @@
-package com.elberthendrata.persistentguided9744.model;
+package com.elberthendrata.persistentunguided9744.model;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -11,8 +11,15 @@ public class User implements Serializable {
     @PrimaryKey(autoGenerate = true)
     public int id;
 
+    @ColumnInfo(name = "number")
+    public String number;
+
     @ColumnInfo(name = "full_name")
     public String fullName;
+
+    @ColumnInfo(name = "age")
+    public int age;
+
 
     public int getId() {
         return id;
@@ -22,12 +29,28 @@ public class User implements Serializable {
         this.id = id;
     }
 
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
     public String getFullName() {
         return fullName;
     }
 
     public void setFullName(String fullName) {
         this.fullName = fullName;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 }
 

@@ -1,4 +1,4 @@
-package com.elberthendrata.persistentguided9744.database;
+package com.elberthendrata.persistentunguided9744.database;
 
 import android.content.Context;
 
