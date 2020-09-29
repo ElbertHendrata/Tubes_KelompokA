@@ -15,7 +15,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.elberthendrata.Tubes.database.DatabaseClient;
-import com.elberthendrata.Tubes.model.User;
+import com.elberthendrata.Tubes.model.Guru;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -25,7 +25,7 @@ public class AddGuruFragment extends Fragment {
     TextInputEditText nameText, numberText, ageText;
     TextInputLayout layoutName, layoutAge, layoutNum;
     Button addBtn, cancelBtn;
-    User user;
+    Guru guru;
 
 
 
@@ -65,7 +65,7 @@ public class AddGuruFragment extends Fragment {
 
                 else{
                     addUser();
-                    Toast.makeText(getActivity().getApplicationContext(), "Employee Saved", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity().getApplicationContext(), "Guru Saved", Toast.LENGTH_SHORT).show();
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
                     transaction.hide(AddGuruFragment.this).commit();
                 }
@@ -91,14 +91,14 @@ public class AddGuruFragment extends Fragment {
 
             @Override
             protected Void doInBackground(Void... voids) {
-                User user = new User();
-                user.setFullName(name);
-                user.setNumber(number);
-                user.setAge(age);
+                Guru guru = new Guru();
+                guru.setFullName(name);
+                guru.setNumber(number);
+                guru.setAge(age);
 
                 DatabaseClient.getInstance(getContext()).getDatabase()
-                        .userDao()
-                        .insert(user);
+                        .guruDao()
+                        .insert(guru);
                 return null;
             }
         }

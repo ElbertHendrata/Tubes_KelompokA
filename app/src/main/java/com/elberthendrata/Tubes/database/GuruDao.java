@@ -6,24 +6,24 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.elberthendrata.Tubes.model.User;
+import com.elberthendrata.Tubes.model.Guru;
 
 import java.util.List;
 
 @Dao
-public interface UserDao {
+public interface GuruDao {
 
-    @Query("SELECT * FROM user")
-    List<User> getAll();
+    @Query("SELECT * FROM Guru")
+    List<Guru> getAll();
 
     @Insert
-    void insert(User user);
+    void insert(Guru guru);
 
     @Update
-    void update(User user);
+    void update(Guru guru);
 
     @Delete
-    void delete(User user);
+    void delete(Guru guru);
 
 }
 

@@ -3,11 +3,11 @@ package com.elberthendrata.Tubes.database;
 import androidx.room.Database;
 import androidx.room.RoomDatabase;
 
-import com.elberthendrata.Tubes.model.User;
+import com.elberthendrata.Tubes.model.Guru;
 
-@Database(entities = {User.class}, version = 1)
+@Database(entities = {Guru.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
-    public abstract UserDao userDao();
+    public abstract GuruDao guruDao();
 }
 
 

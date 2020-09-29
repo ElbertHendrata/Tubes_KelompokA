@@ -13,11 +13,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.elberthendrata.Tubes.model.Guru;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
-import com.elberthendrata.Tubes.adapter.UserRecyclerViewAdapter;
+import com.elberthendrata.Tubes.adapter.GuruRecyclerViewAdapter;
 import com.elberthendrata.Tubes.database.DatabaseClient;
-import com.elberthendrata.Tubes.model.User;
 
 import java.util.List;
 
@@ -61,22 +61,22 @@ public class GuruActivity extends AppCompatActivity {
     }
 
     private void getUsers(){
-        class GetUsers extends AsyncTask<Void, Void, List<User>>{
+        class GetUsers extends AsyncTask<Void, Void, List<Guru>>{
 
             @Override
-            protected List<User> doInBackground(Void... voids) {
-                List<User> userList = DatabaseClient
+            protected List<Guru> doInBackground(Void... voids) {
+                List<Guru> guruList = DatabaseClient
                         .getInstance(getApplicationContext())
                         .getDatabase()
-                        .userDao()
+                        .guruDao()
                         .getAll();
-                return userList;
+                return guruList;
             }
 
             @Override
-            protected void onPostExecute(List<User> users) {
+            protected void onPostExecute(List<Guru> users) {
                 super.onPostExecute(users);
-                final UserRecyclerViewAdapter adapter = new UserRecyclerViewAdapter(GuruActivity.this, users);
+                final GuruRecyclerViewAdapter adapter = new GuruRecyclerViewAdapter(GuruActivity.this, users);
                 recyclerView.setAdapter(adapter);
                 if (users.isEmpty()){
                     Toast.makeText(getApplicationContext(), "Empty List", Toast.LENGTH_SHORT).show();

@@ -15,9 +15,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.elberthendrata.Tubes.model.Guru;
 import com.google.android.material.textfield.TextInputEditText;
 import com.elberthendrata.Tubes.database.DatabaseClient;
-import com.elberthendrata.Tubes.model.User;
 import com.google.android.material.textfield.TextInputLayout;
 
 
@@ -26,7 +26,7 @@ public class UpdateGuruFragment extends Fragment {
     TextInputEditText nameText, numberText, ageText;
     TextInputLayout layoutName, layoutAge, layoutNum;
     Button saveBtn, deleteBtn, cancelBtn;
-    User user;
+    Guru guru;
 
     public UpdateGuruFragment() {
         // Required empty public constructor
@@ -35,7 +35,7 @@ public class UpdateGuruFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_guru_update, container, false);
-        user = (User) getArguments().getSerializable("user");
+        guru = (Guru) getArguments().getSerializable("guru");
         nameText = view.findViewById(R.id.input_name);
         numberText = view.findViewById(R.id.input_number);
         ageText = view.findViewById(R.id.input_age);
@@ -46,9 +46,9 @@ public class UpdateGuruFragment extends Fragment {
         layoutAge = view.findViewById(R.id.input_age_layout);
         layoutNum = view.findViewById(R.id.input_number_layout);
         try {
-                nameText.setText(user.getFullName());
-                ageText.setText(user.getAge().toString());
-                numberText.setText(user.getNumber());
+                nameText.setText(guru.getFullName());
+                ageText.setText(guru.getAge().toString());
+                numberText.setText(guru.getNumber());
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -70,10 +70,10 @@ public class UpdateGuruFragment extends Fragment {
                 }
                 else
                 {
-                    user.setFullName(nameText.getText().toString());
-                    user.setNumber(numberText.getText().toString());
-                    user.setAge(Integer.valueOf(ageText.getText().toString()));
-                    update(user);
+                    guru.setFullName(nameText.getText().toString());
+                    guru.setNumber(numberText.getText().toString());
+                    guru.setAge(Integer.valueOf(ageText.getText().toString()));
+                    update(guru);
                 }
 
             }
@@ -88,7 +88,7 @@ public class UpdateGuruFragment extends Fragment {
                         builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int id) {
-                                    delete(user);
+                                    delete(guru);
                             }
                         }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
                             @Override
@@ -110,22 +110,22 @@ public class UpdateGuruFragment extends Fragment {
         });
     }
 
-    private void update(final User user){
+    private void update(final Guru guru){
         class UpdateUser extends AsyncTask<Void, Void, Void> {
 
             @Override
             protected Void doInBackground(Void... voids) {
 
                 DatabaseClient.getInstance(getActivity().getApplicationContext()).getDatabase()
-                        .userDao()
-                        .update(user);
+                        .guruDao()
+                        .update(guru);
                 return null;
             }
 
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
-                Toast.makeText(getActivity().getApplicationContext(), "Employee updated", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getApplicationContext(), "Guru updated", Toast.LENGTH_SHORT).show();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.hide(UpdateGuruFragment.this).commit();
             }
@@ -135,22 +135,22 @@ public class UpdateGuruFragment extends Fragment {
         update.execute();
     }
 
-    private void delete(final User user){
+    private void delete(final Guru guru){
         class DeleteUser extends AsyncTask<Void, Void, Void> {
 
             @Override
             protected Void doInBackground(Void... voids) {
 
                 DatabaseClient.getInstance(getActivity().getApplicationContext()).getDatabase()
-                        .userDao()
-                        .delete(user);
+                        .guruDao()
+                        .delete(guru);
                 return null;
             }
 
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
-                Toast.makeText(getActivity().getApplicationContext(), "Employee deleted", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getApplicationContext(), "Guru deleted", Toast.LENGTH_SHORT).show();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.hide(UpdateGuruFragment.this).commit();
             }

@@ -14,22 +14,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.elberthendrata.Tubes.R;
 import com.elberthendrata.Tubes.UpdateGuruFragment;
-import com.elberthendrata.Tubes.model.User;
+import com.elberthendrata.Tubes.model.Guru;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserRecyclerViewAdapter extends RecyclerView.Adapter<UserRecyclerViewAdapter.UserViewHolder> implements Filterable {
+public class GuruRecyclerViewAdapter extends RecyclerView.Adapter<GuruRecyclerViewAdapter.UserViewHolder> implements Filterable {
 
     private Context context;
-    private List<User> userList;
-    private List<User> userListFull;
+    private List<Guru> guruList;
+    private List<Guru> guruListFull;
 
 
-    public UserRecyclerViewAdapter(Context context, List<User> userList) {
+    public GuruRecyclerViewAdapter(Context context, List<Guru> guruList) {
         this.context = context;
-        this.userList = userList;
-        userListFull = new ArrayList<>(userList);
+        this.guruList = guruList;
+        guruListFull = new ArrayList<>(guruList);
         notifyDataSetChanged();
     }
 
@@ -42,15 +42,15 @@ public class UserRecyclerViewAdapter extends RecyclerView.Adapter<UserRecyclerVi
 
     @Override
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
-        User user = userList.get(position);
-        holder.textViewName.setText(user.getFullName());
-        holder.textViewAge.setText(Integer.toString(user.getAge())+ " years old");
-        holder.textViewNumber.setText(user.getNumber());
+        Guru guru = guruList.get(position);
+        holder.textViewName.setText(guru.getFullName());
+        holder.textViewAge.setText(Integer.toString(guru.getAge())+ " years old");
+        holder.textViewNumber.setText(guru.getNumber());
     }
 
     @Override
     public int getItemCount() {
-        return userList.size();
+        return guruList.size();
     }
 
     public class UserViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -68,9 +68,9 @@ public class UserRecyclerViewAdapter extends RecyclerView.Adapter<UserRecyclerVi
         @Override
         public void onClick(View v) {
             AppCompatActivity activity = (AppCompatActivity) v.getContext();
-            User user = userList.get(getAdapterPosition());
+            Guru guru = guruList.get(getAdapterPosition());
             Bundle data = new Bundle();
-            data.putSerializable("user", user);
+            data.putSerializable("guru", guru);
             UpdateGuruFragment updateFragment = new UpdateGuruFragment();
             updateFragment.setArguments(data);
             activity.getSupportFragmentManager()
@@ -88,18 +88,18 @@ public class UserRecyclerViewAdapter extends RecyclerView.Adapter<UserRecyclerVi
     private Filter userListFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence charSequence) {
-            List<User> filteredList = new ArrayList<>();
+            List<Guru> filteredList = new ArrayList<>();
 
             if(charSequence == null || charSequence.length()==0){
-                filteredList.addAll(userListFull);
+                filteredList.addAll(guruListFull);
             }
             else
             {
                 String filterPattern = charSequence.toString().toLowerCase().trim();
 
-                for (User user : userListFull){
-                    if(user.getFullName().toLowerCase().contains(filterPattern)){
-                        filteredList.add(user);
+                for (Guru guru : guruListFull){
+                    if(guru.getFullName().toLowerCase().contains(filterPattern)){
+                        filteredList.add(guru);
                     }
                 }
             }
@@ -110,8 +110,8 @@ public class UserRecyclerViewAdapter extends RecyclerView.Adapter<UserRecyclerVi
 
         @Override
         protected void publishResults(CharSequence charSequence, FilterResults results) {
-            userList.clear();
-            userList.addAll((List) results.values);
+            guruList.clear();
+            guruList.addAll((List) results.values);
             notifyDataSetChanged();
         }
     };
