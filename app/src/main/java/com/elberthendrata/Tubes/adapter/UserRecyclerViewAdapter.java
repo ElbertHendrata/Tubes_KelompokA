@@ -1,4 +1,4 @@
-package com.elberthendrata.persistentunguided9744.adapter;
+package com.elberthendrata.Tubes.adapter;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,9 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.elberthendrata.persistentunguided9744.R;
-import com.elberthendrata.persistentunguided9744.UpdateFragment;
-import com.elberthendrata.persistentunguided9744.model.User;
+import com.elberthendrata.Tubes.R;
+import com.elberthendrata.Tubes.UpdateGuruFragment;
+import com.elberthendrata.Tubes.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,7 +71,7 @@ public class UserRecyclerViewAdapter extends RecyclerView.Adapter<UserRecyclerVi
             User user = userList.get(getAdapterPosition());
             Bundle data = new Bundle();
             data.putSerializable("user", user);
-            UpdateFragment updateFragment = new UpdateFragment();
+            UpdateGuruFragment updateFragment = new UpdateGuruFragment();
             updateFragment.setArguments(data);
             activity.getSupportFragmentManager()
                     .beginTransaction()

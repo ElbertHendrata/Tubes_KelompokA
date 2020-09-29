@@ -1,15 +1,15 @@
 <resources>
-    <string name="app_name">PersistentUnguided9744</string>
+    <string name="app_name">TUBES</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_main">List Of Employee</string>
+    <string name="title_main">List Of Guru</string>
     <string name="full_name">Input full name</string>
     <string name="umur">Input age</string>
     <string name="number">Input number</string>
     <string name="add">Add</string>
-    <string name="addE">Add Employee</string>
+    <string name="addE">Add Guru</string>
     <string name="update">Update</string>
-    <string name="updateE">Update Employee</string>
+    <string name="updateE">Update Guru</string>
     <string name="delete">Delete</string>
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>

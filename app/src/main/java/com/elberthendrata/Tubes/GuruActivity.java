@@ -1,10 +1,9 @@
-package com.elberthendrata.persistentunguided9744;
+package com.elberthendrata.Tubes;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -16,13 +15,13 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
-import com.elberthendrata.persistentunguided9744.adapter.UserRecyclerViewAdapter;
-import com.elberthendrata.persistentunguided9744.database.DatabaseClient;
-import com.elberthendrata.persistentunguided9744.model.User;
+import com.elberthendrata.Tubes.adapter.UserRecyclerViewAdapter;
+import com.elberthendrata.Tubes.database.DatabaseClient;
+import com.elberthendrata.Tubes.model.User;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class GuruActivity extends AppCompatActivity {
 
     private TextInputEditText editText;
     private FloatingActionButton addBtn;
@@ -32,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_guru);
         editText = findViewById(R.id.input_name);
         addBtn = findViewById(R.id.add_member);
         refreshLayout = findViewById(R.id.swipe_refresh);
@@ -42,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment AddFragment = new AddFragment();
+                Fragment AddFragment = new AddGuruFragment();
                 getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.frame_layout, AddFragment)
@@ -77,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             protected void onPostExecute(List<User> users) {
                 super.onPostExecute(users);
-                final UserRecyclerViewAdapter adapter = new UserRecyclerViewAdapter(MainActivity.this, users);
+                final UserRecyclerViewAdapter adapter = new UserRecyclerViewAdapter(GuruActivity.this, users);
                 recyclerView.setAdapter(adapter);
                 if (users.isEmpty()){
                     Toast.makeText(getApplicationContext(), "Empty List", Toast.LENGTH_SHORT).show();

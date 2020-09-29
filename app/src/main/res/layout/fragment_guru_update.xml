@@ -7,14 +7,14 @@
     android:layout_margin="16dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UpdateFragment">
+    tools:context=".UpdateGuruFragment">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/TextAppearance.MaterialComponents.Headline4"
         android:gravity="center"
-        android:text="@string/updateE" />
+        android:text="Update Guru" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/input_number_layout"
@@ -29,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:autofillHints=""
-            android:hint="@string/number"
+            android:hint="Input nomor pegawai"
             android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
 

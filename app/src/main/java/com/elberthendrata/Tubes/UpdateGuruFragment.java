@@ -1,4 +1,4 @@
-package com.elberthendrata.persistentunguided9744;
+package com.elberthendrata.Tubes;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -16,25 +16,25 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.textfield.TextInputEditText;
-import com.elberthendrata.persistentunguided9744.database.DatabaseClient;
-import com.elberthendrata.persistentunguided9744.model.User;
+import com.elberthendrata.Tubes.database.DatabaseClient;
+import com.elberthendrata.Tubes.model.User;
 import com.google.android.material.textfield.TextInputLayout;
 
 
-public class UpdateFragment extends Fragment {
+public class UpdateGuruFragment extends Fragment {
 
     TextInputEditText nameText, numberText, ageText;
     TextInputLayout layoutName, layoutAge, layoutNum;
     Button saveBtn, deleteBtn, cancelBtn;
     User user;
 
-    public UpdateFragment() {
+    public UpdateGuruFragment() {
         // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_update, container, false);
+        View view = inflater.inflate(R.layout.fragment_guru_update, container, false);
         user = (User) getArguments().getSerializable("user");
         nameText = view.findViewById(R.id.input_name);
         numberText = view.findViewById(R.id.input_number);
@@ -105,7 +105,7 @@ public class UpdateFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.hide(UpdateFragment.this).commit();
+                transaction.hide(UpdateGuruFragment.this).commit();
             }
         });
     }
@@ -127,7 +127,7 @@ public class UpdateFragment extends Fragment {
                 super.onPostExecute(aVoid);
                 Toast.makeText(getActivity().getApplicationContext(), "Employee updated", Toast.LENGTH_SHORT).show();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.hide(UpdateFragment.this).commit();
+                transaction.hide(UpdateGuruFragment.this).commit();
             }
         }
 
@@ -152,7 +152,7 @@ public class UpdateFragment extends Fragment {
                 super.onPostExecute(aVoid);
                 Toast.makeText(getActivity().getApplicationContext(), "Employee deleted", Toast.LENGTH_SHORT).show();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.hide(UpdateFragment.this).commit();
+                transaction.hide(UpdateGuruFragment.this).commit();
             }
         }
 

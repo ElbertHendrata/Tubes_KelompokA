@@ -1,4 +1,4 @@
-package com.elberthendrata.persistentunguided9744.model;
+package com.elberthendrata.Tubes.model;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;

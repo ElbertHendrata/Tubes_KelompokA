@@ -1,4 +1,4 @@
-package com.elberthendrata.persistentunguided9744;
+package com.elberthendrata.Tubes;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,13 +14,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.elberthendrata.persistentunguided9744.database.DatabaseClient;
-import com.elberthendrata.persistentunguided9744.model.User;
+import com.elberthendrata.Tubes.database.DatabaseClient;
+import com.elberthendrata.Tubes.model.User;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 
-public class AddFragment extends Fragment {
+public class AddGuruFragment extends Fragment {
 
     TextInputEditText nameText, numberText, ageText;
     TextInputLayout layoutName, layoutAge, layoutNum;
@@ -29,14 +29,14 @@ public class AddFragment extends Fragment {
 
 
 
-    public AddFragment() {
+    public AddGuruFragment() {
         // Required empty public constructor
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_add, container, false);
+        View view = inflater.inflate(R.layout.fragment_guru_add, container, false);
         nameText = view.findViewById(R.id.input_name);
         numberText = view.findViewById(R.id.input_number);
         ageText = view.findViewById(R.id.input_age);
@@ -67,7 +67,7 @@ public class AddFragment extends Fragment {
                     addUser();
                     Toast.makeText(getActivity().getApplicationContext(), "Employee Saved", Toast.LENGTH_SHORT).show();
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                    transaction.hide(AddFragment.this).commit();
+                    transaction.hide(AddGuruFragment.this).commit();
                 }
 
             }
@@ -76,7 +76,7 @@ public class AddFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.hide(AddFragment.this).commit();
+                transaction.hide(AddGuruFragment.this).commit();
             }
         });
     }
