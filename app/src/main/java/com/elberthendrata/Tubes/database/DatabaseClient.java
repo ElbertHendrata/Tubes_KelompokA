@@ -10,10 +10,12 @@ public class DatabaseClient {
     private static DatabaseClient databaseClient;
 
     private AppDatabase database;
+    private AppDatabase2 database2;
 
     private DatabaseClient(Context context){
         this.context = context;
         database = Room.databaseBuilder(context, AppDatabase.class, "guru").build();
+        database2 = Room.databaseBuilder(context, AppDatabase2.class, "student").build();
     }
 
     public static synchronized DatabaseClient getInstance(Context context){
@@ -25,6 +27,10 @@ public class DatabaseClient {
 
     public AppDatabase getDatabase(){
         return database;
+    }
+
+    public AppDatabase2 getDatabase2(){
+        return database2;
     }
 }
 

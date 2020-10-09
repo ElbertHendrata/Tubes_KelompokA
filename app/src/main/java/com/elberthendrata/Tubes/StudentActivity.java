@@ -8,21 +8,20 @@ import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.elberthendrata.Tubes.model.Guru;
+import com.elberthendrata.Tubes.adapter.StudentRecyclerViewAdapter;
+import com.elberthendrata.Tubes.database.DatabaseClient;
+import com.elberthendrata.Tubes.model.Student;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
-import com.elberthendrata.Tubes.adapter.GuruRecyclerViewAdapter;
-import com.elberthendrata.Tubes.database.DatabaseClient;
 
 import java.util.List;
 
-public class GuruActivity extends AppCompatActivity {
+public class StudentActivity extends AppCompatActivity {
 
     private TextInputEditText editText;
     private FloatingActionButton addBtn;
@@ -32,7 +31,7 @@ public class GuruActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_guru);
+        setContentView(R.layout.activity_student);
         editText = findViewById(R.id.input_name);
         addBtn = findViewById(R.id.add_member);
         refreshLayout = findViewById(R.id.swipe_refresh);
@@ -42,7 +41,7 @@ public class GuruActivity extends AppCompatActivity {
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment AddFragment = new AddGuruFragment();
+                Fragment AddFragment = new AddStudentFragment();
 
                 getSupportFragmentManager()
                         .beginTransaction()
@@ -63,22 +62,22 @@ public class GuruActivity extends AppCompatActivity {
     }
 
     private void getUsers(){
-        class GetUsers extends AsyncTask<Void, Void, List<Guru>>{
+        class GetUsers extends AsyncTask<Void, Void, List<Student>>{
 
             @Override
-            protected List<Guru> doInBackground(Void... voids) {
-                List<Guru> guruList = DatabaseClient
+            protected List<Student> doInBackground(Void... voids) {
+                List<Student> studentList = DatabaseClient
                         .getInstance(getApplicationContext())
-                        .getDatabase()
-                        .guruDao()
+                        .getDatabase2()
+                        .studentDao()
                         .getAll();
-                return guruList;
+                return studentList;
             }
 
             @Override
-            protected void onPostExecute(List<Guru> users) {
+            protected void onPostExecute(List<Student> users) {
                 super.onPostExecute(users);
-                final GuruRecyclerViewAdapter adapter = new GuruRecyclerViewAdapter(GuruActivity.this, users);
+                final StudentRecyclerViewAdapter adapter = new StudentRecyclerViewAdapter(StudentActivity.this, users);
                 recyclerView.setAdapter(adapter);
                 if (users.isEmpty()){
                     Toast.makeText(getApplicationContext(), "Empty List", Toast.LENGTH_SHORT).show();

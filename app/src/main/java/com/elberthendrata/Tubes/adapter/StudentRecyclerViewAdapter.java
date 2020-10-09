@@ -8,70 +8,73 @@ import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.elberthendrata.Tubes.R;
-import com.elberthendrata.Tubes.UpdateGuruFragment;
-import com.elberthendrata.Tubes.model.Guru;
+import com.elberthendrata.Tubes.UpdateStudentFragment;
+import com.elberthendrata.Tubes.model.Student;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class GuruRecyclerViewAdapter extends RecyclerView.Adapter<GuruRecyclerViewAdapter.UserViewHolder> implements Filterable {
+public class StudentRecyclerViewAdapter extends RecyclerView.Adapter<StudentRecyclerViewAdapter.UserViewHolder> implements Filterable {
 
     private Context context;
-    private List<Guru> guruList;
-    private List<Guru> guruListFull;
+    private List<Student> studentList;
+    private List<Student> studentListFull;
 
 
-    public GuruRecyclerViewAdapter(Context context, List<Guru> guruList) {
+    public StudentRecyclerViewAdapter(Context context, List<Student> studentList) {
         this.context = context;
-        this.guruList = guruList;
-        guruListFull = new ArrayList<>(guruList);
+        this.studentList = studentList;
+        studentListFull = new ArrayList<>(studentList);
         notifyDataSetChanged();
     }
 
     @NonNull
     @Override
     public UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_guru, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_student, parent, false);
         return new UserViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
-        Guru guru = guruList.get(position);
-        holder.textViewName.setText(guru.getFullName());
-        holder.textViewAge.setText(Integer.toString(guru.getAge())+ " years old");
-        holder.textViewNumber.setText(guru.getNumber());
+        Student student = studentList.get(position);
+        holder.textViewName.setText(student.getName());
+        holder.textViewAge.setText(Integer.toString(student.getAge())+ " years old");
+        holder.textViewKelas.setText(student.getKelas());
+        holder.textViewAlamat.setText(student.getAlamat());
     }
 
     @Override
     public int getItemCount() {
-        return guruList.size();
+        return studentList.size();
     }
 
     public class UserViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView textViewNumber,  textViewName, textViewAge;
+        TextView textViewKelas,  textViewName, textViewAge, textViewAlamat;
 
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
-            textViewName = itemView.findViewById(R.id.full_name_text);
-            textViewNumber = itemView.findViewById(R.id.number_text);
-            textViewAge = itemView.findViewById(R.id.age_text);
+            textViewName = itemView.findViewById(R.id.name_text);
+            textViewKelas = itemView.findViewById(R.id.kelas_text);
+            textViewAge = itemView.findViewById(R.id.ageS_text);
+            textViewAlamat = itemView.findViewById(R.id.alamat_text);
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
             AppCompatActivity activity = (AppCompatActivity) v.getContext();
-            Guru guru = guruList.get(getAdapterPosition());
+            Student student = studentList.get(getAdapterPosition());
             Bundle data = new Bundle();
-            data.putSerializable("guru", guru);
-            UpdateGuruFragment updateFragment = new UpdateGuruFragment();
+            data.putSerializable("student", student);
+            UpdateStudentFragment updateFragment = new UpdateStudentFragment();
             updateFragment.setArguments(data);
             activity.getSupportFragmentManager()
                     .beginTransaction()
@@ -88,18 +91,18 @@ public class GuruRecyclerViewAdapter extends RecyclerView.Adapter<GuruRecyclerVi
     private Filter userListFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence charSequence) {
-            List<Guru> filteredList = new ArrayList<>();
+            List<Student> filteredList = new ArrayList<>();
 
             if(charSequence == null || charSequence.length()==0){
-                filteredList.addAll(guruListFull);
+                filteredList.addAll(studentListFull);
             }
             else
             {
                 String filterPattern = charSequence.toString().toLowerCase().trim();
 
-                for (Guru guru : guruListFull){
-                    if(guru.getFullName().toLowerCase().contains(filterPattern)){
-                        filteredList.add(guru);
+                for (Student student : studentListFull){
+                    if(student.getName().toLowerCase().contains(filterPattern)){
+                        filteredList.add(student);
                     }
                 }
             }
@@ -110,8 +113,8 @@ public class GuruRecyclerViewAdapter extends RecyclerView.Adapter<GuruRecyclerVi
 
         @Override
         protected void publishResults(CharSequence charSequence, FilterResults results) {
-            guruList.clear();
-            guruList.addAll((List) results.values);
+            studentList.clear();
+            studentList.addAll((List) results.values);
             notifyDataSetChanged();
         }
     };

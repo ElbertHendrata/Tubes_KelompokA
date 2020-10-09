@@ -1,10 +1,13 @@
 package com.elberthendrata.Tubes;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -37,6 +40,7 @@ public class AddGuruFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_guru_add, container, false);
+
         nameText = view.findViewById(R.id.input_name);
         numberText = view.findViewById(R.id.input_number);
         ageText = view.findViewById(R.id.input_age);
